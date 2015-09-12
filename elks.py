@@ -1,23 +1,24 @@
 from urllib.parse import urlencode
 from urllib.error import HTTPError
 from urllib.request import urlopen, Request
+from base64 import b64encode
 import os
 
 def b(x):
     return bytes(x, 'utf-8')
 
-def query_api(message, recipient):
+def query_api(message, recipient, sender='apini'):
     sms = {
-            'from': 'apini',
+            'from': sender,
             'to': recipient,
             'message': message
             }
     data = urlencode(sms)
     username = os.environ['ELKS_ID']
     secret = os.environ['ELKS_SECRET']
-    conn = Request(api_url, b(urlencode(data)))
     api_url = "https://api.46elks.com/a1/SMS"
-    auth = b('Basic ') + b64encode(b('%s:%s') % (username, secret))
+    conn = Request(api_url, b(data))
+    auth = b('Basic ') + b64encode(b('%s:%s' % (username, secret)))
     conn.add_header('Authorization', auth)
     response = urlopen(conn)
     return response.read()
