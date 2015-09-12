@@ -3,6 +3,7 @@ from urllib.parse import parse_qs
 import braintree
 import apini
 import elks
+import os
 import re
 
 app = Flask(__name__)
@@ -58,9 +59,9 @@ def pay(payid):
     if apini.is_payed(payid):
         return "Already payed!"
     braintree.Configuration.configure(braintree.Environment.Sandbox,
-        merchant_id="dfxyx8mq4y7m4zrw",
-        public_key="xx9zvf5nf4wvgryz",
-        private_key="51570311b8ece6b2c49a63c31080518a")
+        merchant_id=os.environ['BT_MERCHANT_ID'],
+        public_key=os.environ['BT_PUBLIC_KEY'],
+        private_key=os.environ['BT_PRIVATE_KEY'])
     token = braintree.ClientToken.generate()
     amount = apini.get_amount(payid)
     return render_template('payform.html',
