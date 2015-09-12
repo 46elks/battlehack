@@ -19,6 +19,8 @@ def incomingsms():
     rawmessage = rawmessage.split()
     rawmessage = list(map(lambda x: x.strip(), rawmessage))
     sender = request.form['from']
+    if len(rawmessage) < 2:
+        return ''
     if re.match("\+[0-9]*", rawmessage[0]):
         recipient = rawmessage[0]
         amount = rawmessage[2]
