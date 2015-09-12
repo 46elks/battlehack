@@ -50,6 +50,10 @@ def post_handler():
         })
         if result.is_success:
             apini.mark_as_payed(uri)
+            parts = apini.get_transaction_parts(uri)
+            sender = parts[0]
+            recipient = parts[1]
+            elks.has_payed(recipient, sender)
             return render_template('resultpage.html', good=True, paid=False)
         else:
             return render_template('resultpage.html', good=False, paid=False)
