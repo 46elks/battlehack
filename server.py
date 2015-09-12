@@ -11,7 +11,7 @@ baseurl = 'https://apini.theusr.org/pay/%s'
 
 @app.route('/')
 def index():
-    return apini.random_url()
+    return render_template('index.html')
 
 @app.route('/incomingsms', methods=['POST'])
 def incomingsms():
