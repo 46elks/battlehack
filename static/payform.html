@@ -25,7 +25,7 @@ $(document).foundation();
       
 <div class="row">
    <div class="small-12 columns">
-     <h1 class="text-center">Ticket, 100 SEK</h1>   
+     <h1 class="text-center">{{amount}} SEK</h1>   
    </div>
 </div>
 
@@ -39,7 +39,7 @@ $(document).foundation();
         
 <div class="row">
    <div class="small-6 columns">
-      <a href="#" onclick="" class="button round expand success">Pay</a>
+      <a href="#" onclick="$('#cardform').submit()" class="button round expand success">Pay {{amount}} SEK</a>
    </div>
    <div class="small-6 columns">
       <a href="#" class="button round expand alert">Cancel</a>
@@ -48,7 +48,7 @@ $(document).foundation();
 
 <div class="row">
    <div class="small-12 columns">
-     <p>Lorme kjhsdf l sadf ldf lkjsd fsd f asdf sd f.</p>   
+     <p>Press pay to pay</p>   
    </div>
 </div>
 
@@ -58,15 +58,7 @@ $(document).foundation();
 </div>
 <script>
 
-/*braintree.Configuration.configure(braintree.Environment.Sandbox,
-                                  merchant_id="dfxyx8mq4y7m4zrw",
-                                  public_key="xx9zvf5nf4wvgryz",
-                                  private_key="51570311b8ece6b2c49a63c31080518a")
-braintree.ClientToken.generate()
-*/
-
-var clientToken = "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIxNTliMTBiYjc0YjkyZGU3OGU1ZjY4OTY5YWEyNzBhNWIyZWVjN2FlNTU0NDZhYTdiMWJhMDI2YmUzNTFkNDNhfGNyZWF0ZWRfYXQ9MjAxNS0wOS0xMlQxNDoxNDo1OC41NTAxOTU1NTQrMDAwMFx1MDAyNm1lcmNoYW50X2lkPWRmeHl4OG1xNHk3bTR6cndcdTAwMjZwdWJsaWNfa2V5PXh4OXp2ZjVuZjR3dmdyeXoiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvZGZ4eXg4bXE0eTdtNHpydy9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbImN2diJdLCJlbnZpcm9ubWVudCI6InNhbmRib3giLCJjbGllbnRBcGlVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvZGZ4eXg4bXE0eTdtNHpydy9jbGllbnRfYXBpIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhdXRoVXJsIjoiaHR0cHM6Ly9hdXRoLnZlbm1vLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhbmFseXRpY3MiOnsidXJsIjoiaHR0cHM6Ly9jbGllbnQtYW5hbHl0aWNzLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20ifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwidGhyZWVEU2VjdXJlIjp7Imxvb2t1cFVybCI6Imh0dHBzOi8vYXBpLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb206NDQzL21lcmNoYW50cy9kZnh5eDhtcTR5N200enJ3L3RocmVlX2Rfc2VjdXJlL2xvb2t1cCJ9LCJwYXlwYWxFbmFibGVkIjp0cnVlLCJwYXlwYWwiOnsiZGlzcGxheU5hbWUiOiJZYXRocmEiLCJjbGllbnRJZCI6bnVsbCwicHJpdmFjeVVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS9wcCIsInVzZXJBZ3JlZW1lbnRVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vdG9zIiwiYmFzZVVybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9jaGVja291dC5wYXlwYWwuY29tIiwiZGlyZWN0QmFzZVVybCI6bnVsbCwiYWxsb3dIdHRwIjp0cnVlLCJlbnZpcm9ubWVudE5vTmV0d29yayI6dHJ1ZSwiZW52aXJvbm1lbnQiOiJvZmZsaW5lIiwidW52ZXR0ZWRNZXJjaGFudCI6ZmFsc2UsImJyYWludHJlZUNsaWVudElkIjoibWFzdGVyY2xpZW50MyIsImJpbGxpbmdBZ3JlZW1lbnRzRW5hYmxlZCI6ZmFsc2UsIm1lcmNoYW50QWNjb3VudElkIjoiYXBpbmkzIiwiY3VycmVuY3lJc29Db2RlIjoiU0VLIn0sImNvaW5iYXNlRW5hYmxlZCI6ZmFsc2UsIm1lcmNoYW50SWQiOiJkZnh5eDhtcTR5N200enJ3IiwidmVubW8iOiJvZmYifQ==";
-
+var clientToken = "{{token}}";
 braintree.setup(clientToken, "dropin", {container: "dropin"});
 
 </script>
