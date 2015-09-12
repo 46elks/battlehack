@@ -30,6 +30,7 @@ def insert_transaction(amount, sender, recipient=None):
     transaction = 'INSERT INTO transactions (uri, amount, sender, recipient) '
     transaction += 'VALUES (%s, %s, %s, %s)'
     get_user = 'SELECT id FROM users WHERE number = %s LIMIT 1'
+    url = random_url()
     if not recipient:
         recipient = sender
     with dbconn() as cur:
@@ -39,7 +40,8 @@ def insert_transaction(amount, sender, recipient=None):
             cur.execute(new_user, (recipient,))
             cur.execute(get_user, (recipient,))
             recipient_id = cur.fetchone()
-        cur.execute(transaction, (random_url(), amount, sender, recipient_id))
+        cur.execute(transaction, (url, amount, sender, recipient_id))
+    return url
 
 def random_url():
     adjectives = []

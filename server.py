@@ -1,9 +1,11 @@
 from flask import Flask, request
 from urllib.parse import parse_qs
 import apini
+import elks
 import re
 
 app = Flask(__name__)
+baseurl = 'https://apini.theusr.org/pay/%s'
 
 @app.route('/')
 def index():
@@ -21,7 +23,11 @@ def incomingsms():
     else:
         recipient = sender
         amount = rawmessage[1]
-    apini.insert_transaction(int(amount), sender, recipient)
+    url = apini.insert_transaction(int(amount), sender, recipient)
+    if recipient == sender:
+        return baseurl % url
+    else:
+        elks.send_url(url, amount, recipient)
     return ''
 
 @app.route('/pay', methods=['POST'])
