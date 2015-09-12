@@ -1,10 +1,9 @@
 CREATE TABLE currencies (
-    id SERIAL PRIMARY KEY,
-    shortname VARCHAR UNIQUE NOT NULL,
-    longname VARCHAR
+    id VARCHAR(3) PRIMARY KEY,
+    name VARCHAR
 );
 
-INSERT INTO currencies (shortname, longname) VALUES
+INSERT INTO currencies (id, name) VALUES
     ('SEK', 'svenska kronor'),
     ('USD', 'united states dollars'),
     ('EUR', 'euros');
@@ -19,8 +18,8 @@ CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     uri VARCHAR NOT NULL UNIQUE,
     datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    currency INTEGER references currencies (id),
+    currency VARCHAR(3) references currencies (id) DEFAULT 'SEK',
     amount INTEGER NOT NULL,
     sender VARCHAR(15),
-    recipient INTEGER references users(id)
+    recipient INTEGER references users(id) NOT NULL
 );

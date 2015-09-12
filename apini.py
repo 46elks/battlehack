@@ -1,4 +1,5 @@
 import psycopg2
+import random
 
 class dbconn:
     def __enter__(self):
@@ -24,7 +25,38 @@ def create_database():
         with open('sql/create.sql', 'r') as create:
             cur.execute(create.read())
 
+def insert_transaction(amount, sender, recipient=None):
+    new_user = 'INSERT INTO users (number) VALUES (%s)'
+    transaction = 'INSERT INTO transactions (uri, amount, sender, recipient) '
+    transaction += 'VALUES (%s, %s, %s, %s)'
+    get_user = 'SELECT id FROM users WHERE number = %s LIMIT 1'
+    if not recipient:
+        recipient = sender
+    with dbconn() as cur:
+        cur.execute(get_user, (recipient,))
+        recipient_id = cur.fetchone()
+        if not recipient_id:
+            cur.execute(new_user, (recipient,))
+            cur.execute(get_user, (recipient,))
+            recipient_id = cur.fetchone()
+        cur.execute(transaction, (random_url(), amount, sender, recipient_id))
+
+def random_url():
+    adjectives = []
+    nouns = []
+    with open('data/adjectives.txt', 'r') as f:
+        adjectives = list(map(lambda x: x.strip(), f))
+    with open('data/nouns.txt', 'r') as f:
+        nouns = list(map(lambda x: x.strip(), f))
+    return '%s-%s%03d' % (
+                            random.choice(adjectives),
+                            random.choice(nouns),
+                            random.randint(0, 999)
+                        )
+
 if __name__ == '__main__':
-    #drop_database()
-    #create_database()
+    drop_database()
+    create_database()
+    insert_transaction(100, '+46707453636', '+4636346256')
+    insert_transaction(100, '+46707453636', '+4636346256')
     pass
