@@ -39,7 +39,7 @@ def incomingsms():
 def post_handler():
     uri = request.form['paytoken']
     if apini.is_payed(uri):
-        return render_template('resultpage.html', paid=True)
+        return render_template('resultpage.html', paid=True, good=False)
     else:
         result = braintree.Transaction.sale({
             "amount": apini.get_amount(uri),
@@ -50,9 +50,9 @@ def post_handler():
         })
         if result.is_success:
             apini.mark_as_payed(uri)
-            return render_template('resultpage.html', good=True)
+            return render_template('resultpage.html', good=True, paid=False)
         else:
-            return render_template('resultpage.html')
+            return render_template('resultpage.html', good=False, paid=False)
 
 @app.route('/pay/<payid>')
 def pay(payid):
