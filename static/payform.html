@@ -7,9 +7,11 @@
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
   <link rel="stylesheet" href="css/foundation.css">
-  <script src="js/vendor/modernizr.js"></script>
-  <script src="js/foundation.min"></script>
   <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet' type='text/css'>
+  <script src="js/vendor/modernizr.js"></script>
+  <script src="js/vendor/jquery.js"></script>
+  <script src="js/foundation.min.js"></script>
+  <script src="https://js.braintreegateway.com/js/beta/braintree-hosted-fields-beta.18.min.js"></script>
 </head>
 <body style="font-family: 'ABeeZee', sans-serif;">
 
@@ -19,7 +21,7 @@ $(document).foundation();
 
 <div class="row">
   <div class="large-6 large-centered columns">
-      <form>
+      <form id="cardform" action="pay" method="POST">
       
 <div class="row">
    <div class="small-12 columns">
@@ -30,92 +32,43 @@ $(document).foundation();
 <div class="row">
    <div class="small-12 columns">
       <div class="row collapse prefix-round">
-         <div class="small-3 columns">
-            <span class="prefix">Card</span>
-         </div>
-         <div class="small-9 columns">
-            <input class="round" data-braintree-name="number" type="text" placeholder="4111 1111 1111 1111" />
-         </div>
+         <div id="dropin" />
       </div>
    </div>
 </div>
-
-<div class="row">
-   <div class="small-6 columns">
-      <div class="row collapse prefix-round">
-         <div class="small-6 columns">
-            <span class="prefix">Expires</span>
-         </div>
-         <div class="small-6 columns">
-            <input class="" data-braintree-name="expiration_date"type="text" placeholder="06/17" />
-         </div>
-      </div>
-    </div>
-    <div class="small-6 columns">   
-      <div class="row collapse prefix-round">
-         <div class="small-6 columns">
-            <span class="prefix">CVV</span>
-         </div>
-         <div class="small-6 columns">
-            <input class="round" data-braintree-name="cvv" type="text" placeholder="123" />
-         </div>
-      </div>
-   </div>
-</div>
-    
-<div class="row">
-   <div class="small-12 columns">
-      <div class="row collapse prefix-round">
-         <div class="small-3 columns">
-            <span class="prefix">Name</span>
-         </div>
-         <div class="small-9 columns">
-            <input class="round" data-braintree-name="cardholder_name" type="text" placeholder="Petter Nickas" />
-         </div>
-      </div>
-   </div>
-</div>
-
-<div class="row">
-   <div class="small-12 columns">
-      <div class="row collapse prefix-round">
-         <div class="small-3 columns">
-            <span class="prefix">Zip</span>
-         </div>
-         <div class="small-9 columns">
-            <input class="round" data-braintree-name="postal_code" type="text" placeholder="66600" />
-         </div>
-      </div>
-   </div>  
-</div>       
         
 <div class="row">
    <div class="small-6 columns">
-      <a href="#" class="button round expand">Pay</a>
+      <a href="#" onclick="" class="button round expand success">Pay</a>
    </div>
    <div class="small-6 columns">
-      <a href="#" class="button round expand">Cancel</a>
+      <a href="#" class="button round expand alert">Cancel</a>
    </div>
 </div>
 
 <div class="row">
    <div class="small-12 columns">
-     <p>Lorem ipsum, kfjhas m,f sadfsj , sfkjf, fsafhjh fsa fd sd
-     fh qif s sdfsh fhfaos sfh  s fhasd  s fhdsfh afös d sfisf as f asfh
-     Lorem ipsum, kfjhas m,f sadfsj , sfkjf, fsafhjh fsa fd sd
-     fh qif s sdfsh fhfaos sfh  s fhasd  s fhdsfh afös d sfisf as f asfh
-     Lorem ipsum, kfjhas m,f sadfsj , sfkjf, fsafhjh fsa fd sd
-     fh qif s sdfsh fhfaos sfh  s fhasd  s fhdsfh afös d sfisf as f asfh
-     Lorem ipsum, kfjhas m,f sadfsj , sfkjf, fsafhjh fsa fd sd
-     fh qif s sdfsh fhfaos sfh  s fhasd  s fhdsfh afös d sfisf as f asfh
-     Lorem ipsum, kfjhas m,f sadfsj , sfkjf, fsafhjh fsa fd sd
-     fh qif s sdfsh fhfaos sfh  s fhasd  s fhdsfh afös d sfisf as f asfh</p>   
+     <p>Lorme kjhsdf l sadf ldf lkjsd fsd f asdf sd f.</p>   
    </div>
 </div>
-        
+
+<input type="hidden" number="" name="number" />
       </form>
   </div>
 </div>
+<script>
 
+/*braintree.Configuration.configure(braintree.Environment.Sandbox,
+                                  merchant_id="dfxyx8mq4y7m4zrw",
+                                  public_key="xx9zvf5nf4wvgryz",
+                                  private_key="51570311b8ece6b2c49a63c31080518a")
+braintree.ClientToken.generate()
+*/
+
+var clientToken = "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIxNTliMTBiYjc0YjkyZGU3OGU1ZjY4OTY5YWEyNzBhNWIyZWVjN2FlNTU0NDZhYTdiMWJhMDI2YmUzNTFkNDNhfGNyZWF0ZWRfYXQ9MjAxNS0wOS0xMlQxNDoxNDo1OC41NTAxOTU1NTQrMDAwMFx1MDAyNm1lcmNoYW50X2lkPWRmeHl4OG1xNHk3bTR6cndcdTAwMjZwdWJsaWNfa2V5PXh4OXp2ZjVuZjR3dmdyeXoiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvZGZ4eXg4bXE0eTdtNHpydy9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbImN2diJdLCJlbnZpcm9ubWVudCI6InNhbmRib3giLCJjbGllbnRBcGlVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvZGZ4eXg4bXE0eTdtNHpydy9jbGllbnRfYXBpIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhdXRoVXJsIjoiaHR0cHM6Ly9hdXRoLnZlbm1vLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhbmFseXRpY3MiOnsidXJsIjoiaHR0cHM6Ly9jbGllbnQtYW5hbHl0aWNzLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb20ifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwidGhyZWVEU2VjdXJlIjp7Imxvb2t1cFVybCI6Imh0dHBzOi8vYXBpLnNhbmRib3guYnJhaW50cmVlZ2F0ZXdheS5jb206NDQzL21lcmNoYW50cy9kZnh5eDhtcTR5N200enJ3L3RocmVlX2Rfc2VjdXJlL2xvb2t1cCJ9LCJwYXlwYWxFbmFibGVkIjp0cnVlLCJwYXlwYWwiOnsiZGlzcGxheU5hbWUiOiJZYXRocmEiLCJjbGllbnRJZCI6bnVsbCwicHJpdmFjeVVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS9wcCIsInVzZXJBZ3JlZW1lbnRVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vdG9zIiwiYmFzZVVybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXNzZXRzVXJsIjoiaHR0cHM6Ly9jaGVja291dC5wYXlwYWwuY29tIiwiZGlyZWN0QmFzZVVybCI6bnVsbCwiYWxsb3dIdHRwIjp0cnVlLCJlbnZpcm9ubWVudE5vTmV0d29yayI6dHJ1ZSwiZW52aXJvbm1lbnQiOiJvZmZsaW5lIiwidW52ZXR0ZWRNZXJjaGFudCI6ZmFsc2UsImJyYWludHJlZUNsaWVudElkIjoibWFzdGVyY2xpZW50MyIsImJpbGxpbmdBZ3JlZW1lbnRzRW5hYmxlZCI6ZmFsc2UsIm1lcmNoYW50QWNjb3VudElkIjoiYXBpbmkzIiwiY3VycmVuY3lJc29Db2RlIjoiU0VLIn0sImNvaW5iYXNlRW5hYmxlZCI6ZmFsc2UsIm1lcmNoYW50SWQiOiJkZnh5eDhtcTR5N200enJ3IiwidmVubW8iOiJvZmYifQ==";
+
+braintree.setup(clientToken, "dropin", {container: "dropin"});
+
+</script>
 </body>
 </html>
