@@ -12,6 +12,7 @@
   <script src="/static/js/vendor/jquery.js"></script>
   <script src="/static/js/foundation.min.js"></script>
   <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+  <meta name="viewport" content="initial-scale=1.0" />
 </head>
 <body style="font-family: 'ABeeZee', sans-serif;">
 
@@ -20,42 +21,41 @@ $(document).foundation();
 </script>
 
 <div class="row">
-  <div class="large-6 large-centered columns">
-      <form id="cardform" action="/pay" method="POST">
-
-<div class="row">
-   <div class="small-12 columns">
-       <h1 class="text-center">{{amount}} SEK</h1>
-   </div>
-</div>
-
-<div class="row">
-   <div class="small-12 columns">
-      <div class="row collapse prefix-round">
-         <div id="dropin" />
+<div class="small-10 small-centered large-8 large-centered columns">
+   <form id="cardform" action="/pay" method="POST">
+   
+      <div class="row">
+         <div class="small-12 large-12 columns">
+            <h1 class="text-center">{{amount}} SEK</h1>
+         </div>
       </div>
-   </div>
-</div>
-
-<div class="row">
-   <div class="small-6 columns">
-      <input type="submit" class="button round expand success" value="Pay {{amount}} SEK" />
-   </div>
-   <div class="small-6 columns">
-      <a href="#" class="button round expand alert">Cancel</a>
-   </div>
-</div>
-
-<div class="row">
-   <div class="small-12 columns">
-       <p>Press pay to pay</p>
-   </div>
-</div>
+      
+      <div class="row">
+         <div class="small-12 large-12 columns">
+               <div id="dropin" />
+         </div>
+      </div>
+      
+       <div class="row">
+          <div class="small-12 large-6 columns">
+               <input type="submit" class="button round expand success" value="Pay {{amount}} SEK" />
+          </div>
+          <div class="small-12 large-6 columns">
+               <a href="#" class="button round expand alert">Cancel</a>
+          </div>
+       </div>
+        
+       <div class="row">
+            <div class="small-12 large-12 columns">
+               <p>Press pay to pay</p>
+            </div>
+       </div>
 
     <input type="hidden" value="{{uri}}" name="paytoken" />
-      </form>
-  </div>
+   </form>
 </div>
+</div>
+
 <script>
 
 var clientToken = "{{token}}";
