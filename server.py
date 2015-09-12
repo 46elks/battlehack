@@ -32,7 +32,7 @@ def incomingsms():
     if recipient == sender:
         return baseurl % url
     else:
-        elks.send_url(url, amount, recipient)
+        elks.send_url(baseurl % url, amount, recipient)
     return ''
 
 @app.route('/pay', methods=['POST'])
