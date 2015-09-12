@@ -24,7 +24,10 @@ def incomingsms():
     else:
         recipient = sender
         amount = rawmessage[1]
-    url = apini.insert_transaction(int(amount), sender, recipient)
+    amount = int(amount)
+    if amount > 15000:
+        return 'Really? REALLY?\n'
+    url = apini.insert_transaction(amount, sender, recipient)
     if recipient == sender:
         return baseurl % url
     else:
@@ -32,11 +35,28 @@ def incomingsms():
     return ''
 
 @app.route('/pay', methods=['POST'])
-def post_handler(payid):
-    return ''
+def post_handler():
+    uri = request.form['paytoken']
+    if apini.is_payed(uri):
+        return "Already payed!"
+    else:
+        result = braintree.Transaction.sale({
+            "amount": apini.get_amount(uri),
+            "payment_method_nonce": request.form['payment_method_nonce'],
+            "options": {
+                "submit_for_settlement": True
+            }
+        })
+        if result.is_success:
+            apini.mark_as_payed(uri)
+            return "Transaction COMPLETED!"
+        else:
+            return "Transaction failed :("
 
 @app.route('/pay/<payid>')
 def pay(payid):
+    if apini.is_payed(payid):
+        return "Already payed!"
     braintree.Configuration.configure(braintree.Environment.Sandbox,
         merchant_id="dfxyx8mq4y7m4zrw",
         public_key="xx9zvf5nf4wvgryz",
@@ -47,7 +67,6 @@ def pay(payid):
                            amount=amount,
                            token=token,
                            uri=payid)
-    
 
 if __name__ == '__main__':
     print('Starting server...')

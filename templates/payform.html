@@ -11,7 +11,7 @@
   <script src="/static/js/vendor/modernizr.js"></script>
   <script src="/static/js/vendor/jquery.js"></script>
   <script src="/static/js/foundation.min.js"></script>
-  <script src="https://js.braintreegateway.com/js/beta/braintree-hosted-fields-beta.18.min.js"></script>
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 </head>
 <body style="font-family: 'ABeeZee', sans-serif;">
 
@@ -22,10 +22,10 @@ $(document).foundation();
 <div class="row">
   <div class="large-6 large-centered columns">
       <form id="cardform" action="/pay" method="POST">
-      
+
 <div class="row">
    <div class="small-12 columns">
-     <h1 class="text-center">{{amount}} SEK</h1>   
+       <h1 class="text-center">{{amount}} SEK</h1>
    </div>
 </div>
 
@@ -36,10 +36,10 @@ $(document).foundation();
       </div>
    </div>
 </div>
-        
+
 <div class="row">
    <div class="small-6 columns">
-      <a href="#" onclick="$('#cardform').submit()" class="button round expand success">Pay {{amount}} SEK</a>
+      <input type="submit" class="button round expand success" value="Pay {{amount}} SEK" />
    </div>
    <div class="small-6 columns">
       <a href="#" class="button round expand alert">Cancel</a>
@@ -48,11 +48,11 @@ $(document).foundation();
 
 <div class="row">
    <div class="small-12 columns">
-     <p>Press pay to pay</p>   
+       <p>Press pay to pay</p>
    </div>
 </div>
 
-<input type="hidden" number="{{uri}}" name="paytoken" />
+    <input type="hidden" value="{{uri}}" name="paytoken" />
       </form>
   </div>
 </div>

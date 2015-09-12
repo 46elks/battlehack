@@ -43,10 +43,21 @@ def insert_transaction(amount, sender, recipient=None):
         cur.execute(transaction, (url, amount, sender, recipient_id))
     return url
 
-def get_amount(transaction_url):
+def get_amount(transaction_uri):
     url_fetch = "SELECT amount FROM transactions WHERE uri = %s"
     with dbconn() as cur:
-        cur.execute(url_fetch, (transaction_url,))
+        cur.execute(url_fetch, (transaction_uri,))
+        return cur.fetchone()[0]
+
+def mark_as_payed(transaction_uri):
+    update_is_payed = "UPDATE transactions SET is_payed=True WHERE uri=%s"
+    with dbconn() as cur:
+        cur.execute(update_is_payed, (transaction_uri,))
+
+def is_payed(transaction_uri):
+    select_is_payed = "SELECT is_payed FROM transactions WHERE uri=%s"
+    with dbconn() as cur:
+        cur.execute(select_is_payed, (transaction_uri,))
         return cur.fetchone()[0]
 
 def random_url():
@@ -65,6 +76,4 @@ def random_url():
 if __name__ == '__main__':
     drop_database()
     create_database()
-    insert_transaction(100, '+46707453636', '+4636346256')
-    insert_transaction(100, '+46707453636', '+4636346256')
     pass

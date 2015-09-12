@@ -21,5 +21,6 @@ CREATE TABLE transactions (
     currency VARCHAR(3) references currencies (id) DEFAULT 'SEK',
     amount INTEGER NOT NULL,
     sender VARCHAR(15),
-    recipient INTEGER references users(id) NOT NULL
+    recipient INTEGER references users(id) NOT NULL,
+    is_payed BOOLEAN DEFAULT False
 );
