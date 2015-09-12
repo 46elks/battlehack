@@ -27,6 +27,12 @@ $(document).foundation();
             </div>
        </div>
        
+{% elif paid %}
+        <div class="row">
+            <div class="small-12 large-12 columns">
+               <span class="round button expand">Already paid, no need to pay again.</span>
+            </div>
+       </div> 
 {% else %}
        <div class="row">
             <div class="small-12 large-12 columns">
