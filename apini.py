@@ -43,6 +43,12 @@ def insert_transaction(amount, sender, recipient=None):
         cur.execute(transaction, (url, amount, sender, recipient_id))
     return url
 
+def get_amount(transaction_url):
+    url_fetch = "SELECT amount FROM transactions WHERE uri = %s"
+    with dbconn() as cur:
+        cur.execute(url_fetch, (transaction_url,))
+        return cur.fetchone()[0]
+
 def random_url():
     adjectives = []
     nouns = []
