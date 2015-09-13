@@ -29,8 +29,14 @@ $(document).foundation();
        
 {% elif paid %}
         <div class="row">
+            <div class="small-12 large-12 columns round label">
+               <img src="/static/dontberidiculous.jpg"
+                alt="Don't bee ridiculous" />
+            </div>
+        </div>
+        <div class="row">
             <div class="small-12 large-12 columns">
-               <span class="round button expand">Already paid.</span>
+               <span class="round button expand">Already Paid</span>
             </div>
        </div> 
        
@@ -44,7 +50,7 @@ $(document).foundation();
        
        <div class="row">       
             <div class="small-12 large-12 columns">
-               <a href="/pay/{{uri}}" class="button round expand">Try again!</span>
+               <a href="/pay/{{uri}}" class="button round expand">Try again!</a>
             </div>
        </div>
         
