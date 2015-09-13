@@ -33,7 +33,7 @@ def incomingsms():
     url = apini.insert_transaction(amount, sender, recipient)
     if recipient == sender:
         return "Hey there, the payment of SEK %s may now be payed at\n%s" % (
-                baseurl % url)
+                amount, baseurl % url)
     else:
         elks.send_url(baseurl % url, amount, sender, recipient)
     return ''
