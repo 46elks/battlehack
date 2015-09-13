@@ -29,12 +29,13 @@ def incomingsms():
         amount = rawmessage[1]
     amount = int(amount)
     if amount > 15000:
-        return 'Really? REALLY?\n'
+        return 'Wow. That\'s way too much money for a little bee. Nope.\n'
     url = apini.insert_transaction(amount, sender, recipient)
     if recipient == sender:
-        return baseurl % url
+        return "Hey there, direct the payer to the following URL\n%s" % (
+                baseurl % url)
     else:
-        elks.send_url(baseurl % url, amount, recipient)
+        elks.send_url(baseurl % url, amount, sender, recipient)
     return ''
 
 @app.route('/pay', methods=['POST'])
@@ -55,7 +56,8 @@ def post_handler():
             parts = apini.get_transaction_parts(uri)
             sender = parts[0]
             recipient = parts[1]
-            elks.has_payed(recipient, sender)
+            amount = parts[2]
+            elks.has_payed(recipient, sender, amount)
             return render_template('resultpage.html', good=True, paid=False)
         else:
             return render_template('resultpage.html', good=False, paid=False)

@@ -7,7 +7,7 @@ import os
 def b(x):
     return bytes(x, 'utf-8')
 
-def query_api(message, recipient, sender='apini'):
+def query_api(message, recipient, sender='ApiniBee'):
     sms = {
             'from': sender,
             'to': recipient,
@@ -23,9 +23,15 @@ def query_api(message, recipient, sender='apini'):
     response = urlopen(conn)
     return response.read()
 
-def send_url(url, amount, recipient):
-    query_api('Apini Payment URL %s' % url, recipient)
+def send_url(url, amount, sender, recipient):
+    query_api('Hi, %s has asked you to pay SEK %s on\n%s' % (
+        sender,
+        amount,
+        url), recipient)
 
-def has_payed(payer, recipient):
-    query_api('%s has payed' % payer, recipient)
+def has_payed(payer, recipient, amount):
+    query_api('I\'ve received the sum of SEK %s from %s \\o/' % (
+        amount,
+        payer),
+        recipient)
 

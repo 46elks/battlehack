@@ -61,7 +61,7 @@ def is_payed(transaction_uri):
         return cur.fetchone()[0]
 
 def get_transaction_parts(transaction_uri):
-    select_transaction = "SELECT sender, users.number AS payer FROM "
+    select_transaction = "SELECT sender, users.number AS payer, amount FROM "
     select_transaction += "transactions INNER JOIN users ON users.id "
     select_transaction += "= transactions.recipient WHERE transactions.uri=%s"
     with dbconn() as cur:
