@@ -65,7 +65,7 @@ def post_handler():
 @app.route('/pay/<payid>')
 def pay(payid):
     if apini.is_payed(payid):
-        return "Already payed!"
+        return render_template('resultpage.html', paid=True, good=False)
     braintree.Configuration.configure(braintree.Environment.Sandbox,
         merchant_id=os.environ['BT_MERCHANT_ID'],
         public_key=os.environ['BT_PUBLIC_KEY'],
