@@ -20,39 +20,18 @@ $(document).foundation();
 <div class="row">
 <div class="small-10 small-centered large-6 large-centered columns">
 
-{% if good %}
        <div class="row">
             <div class="small-12 large-12 columns">
                <span class="success round button expand">We now have true success 👻</span>
             </div>
        </div>
        
-{% elif paid %}
+
         <div class="row">
             <div class="small-12 large-12 columns">
                <span class="round button expand">Already paid, no need to pay again.</span>
             </div>
        </div> 
-{% else %}
-       <div class="row">
-            <div class="small-12 large-12 columns">
-               <span class="alert round button expand">Something failed, payment failed 😱</span>
-            </div>
-       </div>
-       
-       
-       <div class="row">       
-            <div class="small-12 large-12 columns">
-               <span class="button round expand">Try again!</span>
-            </div>
-       </div>
-        
-       <div class="row">
-            <div class="small-12 large-12 columns">
-               <p>To get help...</p>
-            </div>
-       </div>
-{% endif %}
 
     <input type="hidden" value="{{uri}}" name="paytoken" />
    </form>
