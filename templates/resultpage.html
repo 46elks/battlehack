@@ -9,7 +9,7 @@
   <script src="/static/js/vendor/modernizr.js"></script>
   <script src="/static/js/vendor/jquery.js"></script>
   <script src="/static/js/foundation.min.js"></script>
-  <meta name="viewport" content="initial-scale=1.0" />
+  <meta name="viewport" content="initial-scale=1.0; width=device-width; user-scalable=no;" />
 </head>
 <body style="font-family: 'ABeeZee', sans-serif;">
 
@@ -23,27 +23,28 @@ $(document).foundation();
 {% if good %}
        <div class="row">
             <div class="small-12 large-12 columns">
-               <span class="success round button expand">We now have true success.</span>
+               <span class="success button expand">Payment successful!</span>
             </div>
        </div>
        
 {% elif paid %}
         <div class="row">
-            <div class="label">
+            <div class="small-12 large-12 columns label">
                <img src="/static/dontbeeridiculous.jpg"
                 alt="Don't bee ridiculous" />
             </div>
         </div>
+        <br />
         <div class="row">
             <div class="small-12 large-12 columns">
-               <span class="round button expand">Already Paid</span>
+               <span class="button expand">Already Paid</span>
             </div>
        </div> 
        
 {% else %}
        <div class="row">
             <div class="small-12 large-12 columns">
-               <span class="alert round button expand">Something went wrong, payment failed.</span>
+               <span class="alert button expand">Something went wrong, payment failed</span>
             </div>
        </div>
        
