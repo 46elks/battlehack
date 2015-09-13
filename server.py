@@ -60,7 +60,7 @@ def post_handler():
             elks.has_payed(recipient, sender, amount)
             return render_template('resultpage.html', good=True, paid=False)
         else:
-            return render_template('resultpage.html', good=False, paid=False)
+            return render_template('resultpage.html', good=False, paid=False, uri=uri)
 
 @app.route('/pay/<payid>')
 def pay(payid):
